@@ -12,7 +12,6 @@ import io.github.boldijar.pdfy.Pdfy
 import io.github.boldijar.pdfy.PdfyParser
 import io.github.boldijar.pdfy.PdfyType
 import io.github.boldijar.pdfy.R
-import io.github.boldijar.pdfy.ui.PdfyAdapter
 import kotlinx.coroutines.*
 import java.util.*
 
@@ -34,7 +33,8 @@ class PdfyView @JvmOverloads constructor(
     fun setPdf(
         path: String,
         type: PdfyType,
-        uniqueCacheName: String = UUID.randomUUID().toString()
+        uniqueCacheName: String = UUID.randomUUID().toString(),
+        headersMap: HashMap<String, String>? = null
     ) {
         recyclerView.adapter = null
         showProgress(true)
@@ -44,7 +44,8 @@ class PdfyView @JvmOverloads constructor(
                 val parser = PdfyParser(
                     path = path,
                     type = type,
-                    uniqueCacheName = uniqueCacheName
+                    uniqueCacheName = uniqueCacheName,
+                    headersMap = headersMap
                 )
                 pdfyParser = parser
                 pdfy =

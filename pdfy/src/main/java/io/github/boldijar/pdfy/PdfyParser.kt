@@ -12,7 +12,7 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 
 class PdfyParser(
-    val path: String, val type: PdfyType, val uniqueCacheName: String
+    val path: String, val type: PdfyType, val uniqueCacheName: String, val headersMap: HashMap<String, String>? = null
 ) {
     companion object {
         private var imageLoader: PdfyImageLoader = PdfyImageLoader()
@@ -52,7 +52,7 @@ class PdfyParser(
         if (file.exists()) {
             return file
         }
-        PdfDownloader.downloadPdf(path, file)
+        PdfDownloader.downloadPdf(path, headersMap, file)
         return file
     }
 

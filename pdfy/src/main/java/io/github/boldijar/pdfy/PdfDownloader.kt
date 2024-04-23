@@ -8,9 +8,15 @@ import java.io.FileOutputStream
 class PdfDownloader {
 
     companion object {
-        fun downloadPdf(pdfUrl: String, outputFile: File) {
+        fun downloadPdf(pdfUrl: String, headersMap: HashMap<String, String>? = null, outputFile: File) {
             val client = OkHttpClient()
-            val request = Request.Builder().url(pdfUrl).build()
+            val requestBuilder = Request.Builder().url(pdfUrl)
+            headersMap?.let { headers ->
+                headers.forEach{
+                    requestBuilder.addHeader(it.key, it.value)
+                }
+            }
+            val request = requestBuilder.build()
             val response = client.newCall(request).execute()
             if (response.isSuccessful) {
                 val inputStream = response.body?.byteStream()
